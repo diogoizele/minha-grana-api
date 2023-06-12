@@ -2,9 +2,9 @@ import "reflect-metadata";
 import "dotenv/config";
 import express from "express";
 
-import { AppDataSource } from "./config/data-source";
-
 import routes from "./routes";
+import { AppDataSource } from "./config/data-source";
+import { authenticate } from "./middlewares";
 
 const app = express();
 const port = 3000;
@@ -20,6 +20,8 @@ AppDataSource.initialize()
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(authenticate);
 
 app.use("/api", routes);
 

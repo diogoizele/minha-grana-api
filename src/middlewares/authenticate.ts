@@ -1,11 +1,21 @@
 import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
 
+import { tokenRepository } from "../repositories";
+import { TokenSchema } from "../typings";
+
 export async function authenticate(
   req: Request,
   res: Response,
   next: NextFunction,
 ) {
+  if (
+    (req.path === "/api/accounts" && req.method === "POST") ||
+    (req.path === "/api/accounts/login" && req.method === "POST")
+  ) {
+    return next();
+  }
+
   try {
     const token = req.headers.authorization?.split(" ")[1];
 
@@ -13,11 +23,17 @@ export async function authenticate(
       throw new Error("Invalid token");
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || "") as {
-      accountId: string;
-    };
+    const secret = String(process.env.JWT_SECRET);
 
-    req.body.accountId = decoded.accountId;
+    const decoded = jwt.verify(token, secret);
+
+    const session = await tokenRepository.findOne({
+      where: { id: (decoded as TokenSchema).id },
+    });
+
+    if (!session) {
+      throw new Error("Invalid token");
+    }
 
     return next();
   } catch (error) {

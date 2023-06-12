@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 import { accountRepository, tokenRepository } from "../../repositories";
-import { LoginAccountRequest } from "../../typings";
+import { LoginAccountRequest, TokenSchema } from "../../typings";
 
 export async function loginAccountService(loginPayload: LoginAccountRequest) {
   const TOKEN_EXPIRATION = 24 * 60 * 60 * 1000;
@@ -22,7 +22,16 @@ export async function loginAccountService(loginPayload: LoginAccountRequest) {
   if (session) await tokenRepository.delete(session);
 
   const secret = String(process.env.JWT_SECRET);
-  const token = jwt.sign({ id: account.id }, secret, {
+
+  const tokenObject: TokenSchema = {
+    id: session?.id,
+    account: {
+      id: account.id,
+      name: account.name,
+    },
+  };
+
+  const token = jwt.sign(tokenObject, secret, {
     expiresIn: TOKEN_EXPIRATION,
   });
 
