@@ -9,15 +9,21 @@ DROP TABLE IF EXISTS Item;
 
 CREATE TABLE Account (
     id INT GENERATED ALWAYS AS IDENTITY NOT NULL,
-    name varchar(255) NOT NULL,
-    email varchar(255) NOT NULL,
-    password varchar(128) NOT NULL,
-    salt varchar(128) NOT NULL,
+    name varchar(255) NOT NULL UNIQUE,
+    email varchar(255) NOT NULL UNIQUE,
+    password varchar(60) NOT NULL,
     
-    CONSTRAINT "pk_Account" PRIMARY KEY (id),
-    CONSTRAINT "uc_Account_Name" UNIQUE (name),
-    CONSTRAINT "uc_Account_Email" UNIQUE (email)
+    CONSTRAINT "pk_Account" PRIMARY KEY (id)
 );
+
+CREATE TABLE Token (
+  id SERIAL PRIMARY KEY,
+  token TEXT NOT NULL,
+  account_id INTEGER REFERENCES Account(id),
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  expires_at TIMESTAMPTZ
+);
+
 
 CREATE TABLE Wallet (
     id INT GENERATED ALWAYS AS IDENTITY NOT NULL,
