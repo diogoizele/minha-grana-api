@@ -1,22 +1,22 @@
-import { Entity, Column, PrimaryColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity()
 export class Wallet {
-  @PrimaryColumn()
-  id: string;
+  @PrimaryGeneratedColumn()
+  id!: number;
+
+  @Column({ type: "numeric", precision: 10, scale: 2 })
+  wage!: number;
+
+  @Column({ type: "numeric", precision: 10, scale: 2 })
+  patrimony!: number;
+
+  @Column({ type: "numeric", precision: 10, scale: 2 })
+  saved!: number;
+
+  @Column({ type: "numeric", precision: 10, scale: 2 })
+  cashValue!: number;
 
   @Column()
-  salary: number;
-
-  @Column()
-  cash: number;
-
-  @Column()
-  assets: number;
-
-  @Column({ nullable: true })
-  saved?: number;
-
-  @Column()
-  user_id: string;
+  accountId!: number;
 }

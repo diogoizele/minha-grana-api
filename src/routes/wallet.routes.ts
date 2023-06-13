@@ -5,13 +5,13 @@ const router = express.Router();
 
 
 
-router.post("/wallet/create",   WalletController.create) ;
+router.post("/wallet/create", WalletController.createWallet) ;
 
-router.put("/wallet/update/:id",  WalletController.update);
+router.put("/wallet/update/:id", WalletController.updateWallet);
 
 //
 router.get("/wallets",  WalletController.getWallets);
 
-router.get("/wallet:id",  WalletController.getWalletById);
+router.get("/wallet:id",  WalletController.getWallet);
 
 export default router;
