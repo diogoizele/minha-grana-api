@@ -1,17 +1,14 @@
 import bcrypt from "bcrypt";
 
-import { accountRepository } from "../../repositories";
+import { accountRepository, walletRepository } from "../../repositories";
 import { encrypt } from "../../config/encrypt";
 import { RegisterAccountRequest } from "../../typings";
+import { Wallet } from "../../models/wallet";
 
 export async function registerAccountService(
   registerPayload: RegisterAccountRequest,
 ) {
   const { name, email, password } = registerPayload;
-
-  if (!name) throw new Error("Name is required");
-  if (!email) throw new Error("Email is required");
-  if (!password) throw new Error("Password is required");
 
   const salt = await bcrypt.genSalt(encrypt.saltRounds);
   const hash = await bcrypt.hash(password, salt);
@@ -22,7 +19,11 @@ export async function registerAccountService(
     password: hash,
   };
 
-  await accountRepository.save(newAccount);
+  const account = await accountRepository.save(newAccount);
+
+  const wallet = new Wallet(account);
+
+  await walletRepository.save(wallet);
 
   return true;
 }

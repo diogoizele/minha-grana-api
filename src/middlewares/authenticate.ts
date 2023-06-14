@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
 
 import { tokenRepository } from "../repositories";
@@ -18,25 +18,25 @@ export async function authenticate(
 
   try {
     const token = req.headers.authorization?.split(" ")[1];
-
-    if (!token) {
-      throw new Error("Invalid token");
-    }
+    if (!token) throw new Error("Invalid token");
 
     const secret = String(process.env.JWT_SECRET);
 
-    const decoded = jwt.verify(token, secret);
+    const decoded = jwt.verify(token, secret) as TokenSchema & JwtPayload;
 
     const session = await tokenRepository.findOne({
-      where: { id: (decoded as TokenSchema).id },
+      where: { account: { id: decoded.account.id } },
     });
 
-    if (!session) {
-      throw new Error("Invalid token");
+    if (!session) throw new Error("Unauthorized");
+
+    if (session.expiresAt < new Date()) {
+      await tokenRepository.delete(session);
+      throw new Error("Expired token");
     }
 
     return next();
-  } catch (error) {
-    return res.status(401).json({ message: "Unauthorized" });
+  } catch (error: any) {
+    return res.status(401).json({ message: error.message || "Unauthorized" });
   }
 }
