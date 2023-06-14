@@ -24,7 +24,6 @@ export async function loginAccountService(loginPayload: LoginAccountRequest) {
   const secret = String(process.env.JWT_SECRET);
 
   const tokenObject: TokenSchema = {
-    id: session?.id,
     account: {
       id: account.id,
       name: account.name,

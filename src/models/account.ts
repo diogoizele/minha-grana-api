@@ -1,15 +1,23 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  OneToOne,
+} from "typeorm";
+
 import { Token } from "./token";
+import { Wallet } from "./wallet";
 
 @Entity()
 export class Account {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 255 })
+  @Column({ length: 255, unique: true })
   name: string;
 
-  @Column({ length: 255 })
+  @Column({ length: 255, unique: true })
   email: string;
 
   @Column({ length: 128 })
@@ -17,4 +25,7 @@ export class Account {
 
   @OneToMany(() => Token, (token) => token.account)
   tokens: Token[];
+
+  @OneToOne(() => Wallet, (wallet) => wallet.account)
+  wallet: Wallet;
 }

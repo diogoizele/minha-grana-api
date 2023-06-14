@@ -4,8 +4,7 @@ import express from "express";
 
 import routes from "./routes";
 import { AppDataSource } from "./config/data-source";
-import { authenticate } from "./middlewares";
-
+import { authenticate, routeNotFound, validate } from "./middlewares";
 
 const app = express();
 const port = 3000;
@@ -23,10 +22,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(authenticate);
-
+app.use(validate);
 app.use("/api", routes);
-
-
+app.use(routeNotFound);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port} 🚀`);

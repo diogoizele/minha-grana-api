@@ -1,8 +1,4 @@
-import { EntityRepository, Repository } from "typeorm";
+import { AppDataSource } from "../config/data-source";
 import { Wallet } from "../models/wallet";
 
-@EntityRepository(Wallet)
-class WalletRepository extends Repository<Wallet> {
-}
-
-export default WalletRepository;
+export const walletRepository = AppDataSource.getRepository(Wallet);

@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import {
   registerAccountService,
   loginAccountService,
+  detailAccount,
 } from "../services/account";
 import { RegisterAccountRequest } from "../typings";
 
@@ -29,8 +30,16 @@ class AccountControler {
     }
   }
 
-  async getAll(req: Request, res: Response) {
-    return res.send("getAll");
+  async detailUser(req: Request, res: Response) {
+    try {
+      const account = await detailAccount(req);
+
+      return res.status(200).json(account);
+    } catch (error) {
+      return res
+        .status(400)
+        .json({ message: `Failed to detail user. ${error}` });
+    }
   }
 }
 

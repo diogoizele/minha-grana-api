@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS Subitem;
 DROP TABLE IF EXISTS Income;
 DROP TABLE IF EXISTS Expense;
 DROP TABLE IF EXISTS Wallet;
+DROP TABLE IF EXISTS Token;
 DROP TABLE IF EXISTS Account;
 DROP TABLE IF EXISTS Item;
 
@@ -27,10 +28,10 @@ CREATE TABLE Token (
 
 CREATE TABLE Wallet (
     id INT GENERATED ALWAYS AS IDENTITY NOT NULL,
-    wage numeric(10,2) NOT NULL,
-    patrimony numeric(10,2) NOT NULL,
-    saved numeric(10,2) NOT NULL,
-    cash_value numeric(10,2) NOT NULL,
+    wage numeric(10,2),
+    patrimony numeric(10,2),
+    saved numeric(10,2),
+    cash_value numeric(10,2),
     account_id int NOT NULL,
     
     CONSTRAINT "pk_Wallet" PRIMARY KEY (id)

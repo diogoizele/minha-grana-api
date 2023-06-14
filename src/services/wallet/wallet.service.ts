@@ -1,28 +1,11 @@
-import { getRepository, Repository } from "typeorm";
 import { Wallet } from "../../models/wallet";
+import { walletRepository } from "../../repositories";
 
 export class WalletService {
-  private walletRepository: Repository<Wallet>;
+  private walletRepository: typeof walletRepository;
 
   constructor() {
-    this.walletRepository = getRepository(Wallet);
-  }
-
-  public async createWallet(
-    wage: number,
-    patrimony: number,
-    saved: number,
-    cashValue: number,
-    accountId: number
-  ): Promise<Wallet> {
-    const wallet = new Wallet();
-    wallet.wage = wage;
-    wallet.patrimony = patrimony;
-    wallet.saved = saved;
-    wallet.cashValue = cashValue;
-    wallet.accountId = accountId;
-
-    return await this.walletRepository.save(wallet);
+    this.walletRepository = walletRepository;
   }
 
   public async getWallets(): Promise<Wallet[]> {
@@ -39,22 +22,26 @@ export class WalletService {
     patrimony: number,
     saved: number,
     cashValue: number,
-    accountId: number
+    accountId: number,
   ): Promise<Wallet | undefined> {
-    const wallet = await this.walletRepository.findOne({ where: { id: walletId } });
+    const wallet = await this.walletRepository.findOne({
+      where: { id: walletId },
+    });
     if (wallet) {
       wallet.wage = wage;
       wallet.patrimony = patrimony;
       wallet.saved = saved;
       wallet.cashValue = cashValue;
-      wallet.accountId = accountId;
+      wallet.account.id = accountId;
       return await this.walletRepository.save(wallet);
     }
     return undefined;
   }
 
   public async deleteWallet(walletId: number): Promise<Wallet | undefined> {
-    const wallet = await this.walletRepository.findOne({ where: { id: walletId } });
+    const wallet = await this.walletRepository.findOne({
+      where: { id: walletId },
+    });
     if (wallet) {
       await this.walletRepository.remove(wallet);
       return wallet;
