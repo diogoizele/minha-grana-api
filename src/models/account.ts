@@ -23,7 +23,7 @@ export class Account {
   @Column({ length: 128 })
   password: string;
 
-  @OneToMany(() => Token, (token) => token.account)
+  @OneToMany(() => Token, (token) => token.accountId)
   tokens: Token[];
 
   @OneToOne(() => Wallet, (wallet) => wallet.account)

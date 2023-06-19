@@ -22,7 +22,7 @@ export class Wallet {
   @Column({ type: "numeric", precision: 10, scale: 2 })
   saved: number;
 
-  @Column({ type: "numeric", precision: 10, scale: 2 })
+  @Column({ type: "numeric", precision: 10, scale: 2, name: "cash_value" })
   cashValue: number;
 
   @OneToOne(() => Account, (account) => account.wallet)

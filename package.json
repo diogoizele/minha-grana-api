@@ -5,12 +5,15 @@
   "main": "app.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "prestart": "docker compose up -d && npm run migration:revert && npm run migration:run",
     "start:dev": "nodemon --exec ts-node src/app.ts",
     "build": "rimraf ./build && npm run lint-fix && tsc -p .",
     "start": "npm run build && node build/app.js",
-    "prepare": "husky install",
     "lint": "eslint . --ext .ts",
-    "lint-fix": "eslint . --ext .ts --fix"
+    "lint-fix": "eslint . --ext .ts --fix",
+    "typeorm": "typeorm-ts-node-esm",
+    "migration:run": "npx typeorm-ts-node-esm migration:run -d src/config/data-source.ts",
+    "migration:revert": "npx typeorm-ts-node-esm migration:revert -d src/config/data-source.ts"
   },
   "keywords": [
     "api",
@@ -43,7 +46,6 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-promise": "^6.0.0",
-    "husky": "^8.0.3",
     "nodemon": "^2.0.22",
     "prettier": "^2.8.8",
     "rimraf": "^5.0.1",

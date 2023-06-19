@@ -7,7 +7,7 @@ import { AppDataSource } from "./config/data-source";
 import { authenticate, routeNotFound, validate } from "./middlewares";
 
 const app = express();
-const port = 3000;
+const port = process.env.SERVER_PORT;
 
 AppDataSource.initialize()
   .then(() => {

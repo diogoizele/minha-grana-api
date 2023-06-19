@@ -17,7 +17,9 @@ export async function loginAccountService(loginPayload: LoginAccountRequest) {
 
   if (!isPasswordValid) throw new Error("Invalid password");
 
-  const session = await tokenRepository.findOne({ where: { account } });
+  const session = await tokenRepository.findOne({
+    where: { accountId: account.id },
+  });
 
   if (session) await tokenRepository.delete(session);
 

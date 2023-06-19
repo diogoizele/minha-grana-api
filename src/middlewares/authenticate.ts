@@ -25,7 +25,7 @@ export async function authenticate(
     const decoded = jwt.verify(token, secret) as TokenSchema & JwtPayload;
 
     const session = await tokenRepository.findOne({
-      where: { account: { id: decoded.account.id } },
+      where: { accountId: decoded.account.id },
     });
 
     if (!session) throw new Error("Unauthorized");

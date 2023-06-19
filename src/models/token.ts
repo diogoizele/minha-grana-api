@@ -1,5 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Account } from "./account";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Token {
@@ -9,9 +8,12 @@ export class Token {
   @Column()
   token: string;
 
-  @Column()
+  @Column({ name: "expires_at" })
   expiresAt: Date;
 
-  @ManyToOne(() => Account, (account) => account.tokens)
-  account: Account;
+  @Column({ name: "created_at" })
+  createdAt: Date;
+
+  @Column({ name: "account_id" })
+  accountId: number;
 }
