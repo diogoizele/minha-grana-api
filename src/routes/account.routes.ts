@@ -10,7 +10,5 @@ router.post("/accounts/login", AccountControler.login);
 
 // Private routes
 router.get("/accounts/detail", AccountControler.detailUser);
-// router.put("/accounts/:id", AccountControler.update);
-// router.delete("/accounts/:id", AccountControler.delete);
 
 export default router;

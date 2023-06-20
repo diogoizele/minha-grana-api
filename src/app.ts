@@ -7,7 +7,7 @@ import { AppDataSource } from "./config/data-source";
 import { authenticate, routeNotFound, validate } from "./middlewares";
 
 const app = express();
-const port = 3000;
+const port = process.env.SERVER_PORT;
 
 AppDataSource.initialize()
   .then(() => {
@@ -23,8 +23,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(authenticate);
 app.use(validate);
-app.use("/api", routes);
-app.use(routeNotFound);
+app.use("/api/v1", routes);
+app.use("*", routeNotFound);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port} 🚀`);

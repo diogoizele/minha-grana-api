@@ -13,7 +13,7 @@ export async function getSession(req: Request) {
   const decoded = jwt.verify(token, secret) as TokenSchema;
 
   const session = await tokenRepository.findOne({
-    where: { account: { id: decoded.account.id } },
+    where: { account: decoded.account },
   });
 
   return {
