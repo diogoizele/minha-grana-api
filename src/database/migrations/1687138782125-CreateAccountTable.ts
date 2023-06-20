@@ -23,6 +23,7 @@ export class CreateAccountTable1687138782125 implements MigrationInterface {
             name: "email",
             type: "varchar",
             length: "255",
+            isUnique: true,
             isNullable: false,
           },
           {

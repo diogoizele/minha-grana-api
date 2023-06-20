@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { Account } from "./account";
 
 @Entity()
 export class Token {
@@ -14,6 +21,7 @@ export class Token {
   @Column({ name: "created_at" })
   createdAt: Date;
 
-  @Column({ name: "account_id" })
-  accountId: number;
+  @ManyToOne(() => Account, (account) => account.tokens)
+  @JoinColumn({ name: "account_id" })
+  account: Account;
 }

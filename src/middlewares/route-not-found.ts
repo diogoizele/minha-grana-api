@@ -1,13 +1,5 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 
-export async function routeNotFound(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) {
-  res.status(404).json({
-    message: "Route not found",
-  });
-
-  next();
+export async function routeNotFound(_: Request, res: Response) {
+  res.status(404).json({ message: "Route not found" });
 }
