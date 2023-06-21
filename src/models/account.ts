@@ -8,6 +8,9 @@ import {
 
 import { Token } from "./token";
 import { Wallet } from "./wallet";
+import { CreditCard } from "./credit-card";
+import { Item } from "./item";
+import { Category } from "./category";
 
 @Entity()
 export class Account {
@@ -28,4 +31,13 @@ export class Account {
 
   @OneToOne(() => Wallet, (wallet) => wallet.account)
   wallet: Wallet;
+
+  @OneToMany(() => CreditCard, (creditCard) => creditCard.account)
+  creditCards: CreditCard[];
+
+  @OneToMany(() => Item, (item) => item.account)
+  items: Item[];
+
+  @OneToMany(() => Category, (category) => category.account)
+  categories: Category[];
 }

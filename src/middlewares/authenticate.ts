@@ -10,8 +10,8 @@ export async function authenticate(
   next: NextFunction,
 ) {
   if (
-    (req.path === "/api/accounts" && req.method === "POST") ||
-    (req.path === "/api/accounts/login" && req.method === "POST")
+    (req.path === "/api/v1/accounts" && req.method === "POST") ||
+    (req.path === "/api/v1/accounts/login" && req.method === "POST")
   ) {
     return next();
   }

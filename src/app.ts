@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import "dotenv/config";
 import express from "express";
+import cors from "cors";
 
 import routes from "./routes";
 import { AppDataSource } from "./config/data-source";
@@ -20,6 +21,14 @@ AppDataSource.initialize()
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(
+  cors({
+    origin: "http://localhost:3001",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
 
 app.use(authenticate);
 app.use(validate);
