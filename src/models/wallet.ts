@@ -7,22 +7,44 @@ import {
 } from "typeorm";
 
 import { Account } from "./";
+import { ColumnNumericTransformer } from "../config/pg-numeric-transformer";
 
 @Entity()
 export class Wallet {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ type: "numeric", precision: 10, scale: 2 })
+  @Column({
+    type: "numeric",
+    precision: 10,
+    scale: 2,
+    transformer: new ColumnNumericTransformer(),
+  })
   wage: number;
 
-  @Column({ type: "numeric", precision: 10, scale: 2 })
+  @Column({
+    type: "numeric",
+    precision: 10,
+    scale: 2,
+    transformer: new ColumnNumericTransformer(),
+  })
   patrimony: number;
 
-  @Column({ type: "numeric", precision: 10, scale: 2 })
+  @Column({
+    type: "numeric",
+    precision: 10,
+    scale: 2,
+    transformer: new ColumnNumericTransformer(),
+  })
   saved: number;
 
-  @Column({ type: "numeric", precision: 10, scale: 2, name: "cash_value" })
+  @Column({
+    type: "numeric",
+    precision: 10,
+    scale: 2,
+    name: "cash_value",
+    transformer: new ColumnNumericTransformer(),
+  })
   cashValue: number;
 
   @OneToOne(() => Account, (account) => account.wallet)

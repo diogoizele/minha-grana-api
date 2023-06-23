@@ -4,7 +4,11 @@ import { getAccount, getSession } from "../account";
 
 import { createIncomeMapper } from "../../mappers";
 import { CreateIncomeRequest } from "../../typings";
-import { incomeRepository, itemRepository } from "../../repositories";
+import {
+  incomeRepository,
+  itemRepository,
+  walletRepository,
+} from "../../repositories";
 
 export async function createIncome(req: Request<{}, {}, CreateIncomeRequest>) {
   const incomeMapper = createIncomeMapper();
@@ -22,6 +26,17 @@ export async function createIncome(req: Request<{}, {}, CreateIncomeRequest>) {
     newIncome.item = item;
 
     const income = await incomeRepository.save(newIncome);
+
+    const wallet = await walletRepository.findOne({
+      where: { account: account },
+    });
+
+    if (wallet) {
+      if (!income.isBlocked) wallet.cashValue += income.item.amount;
+      wallet.patrimony += income.item.amount;
+
+      await walletRepository.save(wallet);
+    }
 
     const response = incomeMapper.toResponse(income);
 
