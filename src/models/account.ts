@@ -6,11 +6,7 @@ import {
   OneToOne,
 } from "typeorm";
 
-import { Token } from "./token";
-import { Wallet } from "./wallet";
-import { CreditCard } from "./credit-card";
-import { Item } from "./item";
-import { Category } from "./category";
+import { Token, Wallet, CreditCard, Item, Category } from "./";
 
 @Entity()
 export class Account {

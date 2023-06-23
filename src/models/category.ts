@@ -6,8 +6,8 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Account } from "./account";
-import { Item } from "./item";
+
+import { Account, Item } from "./";
 
 @Entity()
 export class Category {

@@ -30,7 +30,7 @@ class AccountControler {
     }
   }
 
-  async detailUser(req: Request, res: Response) {
+  async detailAccount(req: Request, res: Response) {
     try {
       const account = await detailAccount(req);
 
@@ -38,7 +38,7 @@ class AccountControler {
     } catch (error) {
       return res
         .status(400)
-        .json({ message: `Failed to detail user. ${error}` });
+        .json({ message: `Failed to detail account. ${error}` });
     }
   }
 }

@@ -14,7 +14,7 @@ export class CreateColumnCategoryAtItemTable1687305289597
       new TableColumn({
         name: "category_id",
         type: "int",
-        isNullable: false,
+        isNullable: true,
       }),
     );
 

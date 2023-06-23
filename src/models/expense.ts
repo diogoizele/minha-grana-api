@@ -5,7 +5,8 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Item } from "./item";
+
+import { Item } from "./";
 
 @Entity()
 export class Expense {

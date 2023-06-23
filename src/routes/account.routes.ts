@@ -9,6 +9,6 @@ router.post("/accounts", AccountControler.register);
 router.post("/accounts/login", AccountControler.login);
 
 // Private routes
-router.get("/accounts/detail", AccountControler.detailUser);
+router.get("/accounts/detail", AccountControler.detailAccount);
 
 export default router;

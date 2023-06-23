@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 
-import { Account } from "./account";
+import { Account } from "./";
 
 @Entity()
 export class CreditCard {

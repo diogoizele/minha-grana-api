@@ -7,12 +7,8 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Frequency } from "./frequency";
-import { Account } from "./account";
-import { Subitem } from "./subitem";
-import { Category } from "./category";
-import { Income } from "./income";
-import { Expense } from "./expense";
+
+import { Account, Frequency, Subitem, Income, Expense, Category } from "./";
 
 @Entity()
 export class Item {

@@ -17,7 +17,7 @@ export class CreateTableIncome1687305860491 implements MigrationInterface {
             name: "receivement_method",
             type: "varchar",
             length: "255",
-            isNullable: false,
+            isNullable: true,
           },
           {
             name: "is_blocked",
