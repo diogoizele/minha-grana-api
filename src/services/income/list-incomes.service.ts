@@ -26,7 +26,10 @@ export async function listIncomes(req: Request) {
       take: pageSize,
     });
 
+    console.log("INCOMES:", incomes);
+
     const response = incomes.map(toDetailResponse);
+    console.log("RESP", response);
 
     return response;
   } catch (error) {

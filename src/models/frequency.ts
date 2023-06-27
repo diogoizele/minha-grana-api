@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 export enum Frequency {
-  MONTHLY = "monthly",
-  YEARLY = "yearly",
-  ONCE = "once",
+  MONTHLY = "MONTHLY",
+  YEARLY = "YEARLY",
+  ONCE = "ONCE",
 }

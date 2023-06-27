@@ -9,6 +9,7 @@ import {
 } from "typeorm";
 
 import { Account, Frequency, Subitem, Income, Expense, Category } from "./";
+import { ColumnNumericTransformer } from "../config/pg-numeric-transformer";
 
 @Entity()
 export class Item {
@@ -21,13 +22,29 @@ export class Item {
   @Column({ length: 512 })
   description: string;
 
-  @Column()
+  @Column({
+    type: "numeric",
+    scale: 2,
+    precision: 10,
+    transformer: new ColumnNumericTransformer(),
+  })
   amount: number;
 
-  @Column()
+  @Column({ enum: Frequency })
   frequency: Frequency;
 
-  @Column()
+  @Column({ name: "created_at", type: "timestamp" })
+  createdAt: Date;
+
+  @Column({ name: "updated_at", type: "timestamp" })
+  updatedAt: Date;
+
+  @Column({
+    type: "numeric",
+    scale: 2,
+    precision: 10,
+    transformer: new ColumnNumericTransformer(),
+  })
   percent: number;
 
   @OneToOne(() => Income, (income) => income.item)
