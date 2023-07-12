@@ -1,14 +1,12 @@
-import { Request } from "express";
-
 import { walletRepository } from "../../repositories";
-import { getSession, getAccount } from "../account";
 import { CreateWalletRequest } from "../../typings";
+import { Account } from "../../models";
 
-export async function createWallet(req: Request<{}, {}, CreateWalletRequest>) {
-  const { cashValue = 0, patrimony = 0, saved = 0, wage = 0 } = req.body;
-  const session = await getSession(req);
-
-  const account = await getAccount(session.account.id);
+export async function createWallet(
+  payload: CreateWalletRequest,
+  account: Account,
+) {
+  const { cashValue = 0, patrimony = 0, saved = 0, wage = 0 } = payload;
 
   const wallet = {
     cashValue,
@@ -18,5 +16,9 @@ export async function createWallet(req: Request<{}, {}, CreateWalletRequest>) {
     account,
   };
 
-  return await walletRepository.save(wallet);
+  try {
+    return await walletRepository.save(wallet);
+  } catch (error: any) {
+    throw new Error(String(error.message));
+  }
 }

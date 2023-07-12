@@ -9,10 +9,16 @@ import {
   loginAccountValidations,
   registerAccountValidations,
 } from "../validators/account";
+import {
+  updateWageValidations,
+  updateWalletValidations,
+} from "../validators/wallet";
 
 const validations: Record<string, ValidationChain[]> = {
-  "POST /api/accounts": registerAccountValidations,
-  "POST /api/accounts/login": loginAccountValidations,
+  "POST /api/v1/accounts": registerAccountValidations,
+  "POST /api/v1/accounts/login": loginAccountValidations,
+  "PATCH /api/v1/wallets": updateWageValidations,
+  "PUT /api/v1/wallets": updateWalletValidations,
 };
 
 export async function validate(

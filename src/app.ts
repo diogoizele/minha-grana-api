@@ -1,3 +1,5 @@
+/// <reference path="./@types/express.d.ts" />
+
 import "reflect-metadata";
 import "dotenv/config";
 import express from "express";
@@ -5,7 +7,12 @@ import cors from "cors";
 
 import routes from "./routes";
 import { AppDataSource } from "./config/data-source";
-import { authenticate, routeNotFound, validate } from "./middlewares";
+import {
+  authenticate,
+  injectRequestData,
+  routeNotFound,
+  validate,
+} from "./middlewares";
 
 const app = express();
 const port = process.env.SERVER_PORT;
@@ -31,6 +38,7 @@ app.use(
 );
 
 app.use(authenticate);
+app.use(injectRequestData);
 app.use(validate);
 app.use("/api/v1", routes);
 app.use("*", routeNotFound);

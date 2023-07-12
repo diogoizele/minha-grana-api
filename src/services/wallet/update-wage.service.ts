@@ -1,8 +1,9 @@
 import { walletRepository } from "../../repositories";
-import { detailWalletMapper } from "../../mappers";
+
+import { UpdateWageRequest } from "../../typings";
 import { Account } from "../../models";
 
-export async function detailWallet(account: Account) {
+export async function updateWage(payload: UpdateWageRequest, account: Account) {
   try {
     const wallet = await walletRepository.findOne({
       where: { account },
@@ -10,7 +11,11 @@ export async function detailWallet(account: Account) {
 
     if (!wallet) throw new Error("Wallet not found");
 
-    return detailWalletMapper(wallet);
+    const { wage } = payload;
+
+    wallet.wage = wage;
+
+    await walletRepository.save(wallet);
   } catch (error: any) {
     throw new Error(String(error.message));
   }

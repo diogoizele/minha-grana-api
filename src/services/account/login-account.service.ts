@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 
 import { accountRepository, tokenRepository } from "../../repositories";
 import { LoginAccountRequest, TokenSchema } from "../../typings";
+import { updatePatrimony } from "../wallet";
 
 export async function loginAccountService(loginPayload: LoginAccountRequest) {
   const TOKEN_EXPIRATION = 24 * 60 * 60 * 1000;
@@ -19,8 +20,6 @@ export async function loginAccountService(loginPayload: LoginAccountRequest) {
     const session = await tokenRepository.findOne({
       where: { account },
     });
-
-    console.log("Sessão encontrada: ", session);
 
     if (session) await tokenRepository.remove(session);
 
@@ -45,6 +44,8 @@ export async function loginAccountService(loginPayload: LoginAccountRequest) {
     };
 
     await tokenRepository.save(newSession);
+
+    await updatePatrimony(account);
 
     return token;
   } catch (error: any) {

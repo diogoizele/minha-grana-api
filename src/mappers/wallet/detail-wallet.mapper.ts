@@ -7,5 +7,7 @@ export function detailWalletMapper(wallet: Wallet) {
     patrimony: wallet.patrimony,
     saved: wallet.saved,
     cashValue: wallet.cashValue,
+    paymentDate: wallet.paymentDate,
+    lastUpdatePaymentDate: wallet.lastUpdatePaymentDate,
   };
 }

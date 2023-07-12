@@ -47,6 +47,20 @@ export class Wallet {
   })
   cashValue: number;
 
+  @Column({
+    type: "integer",
+    name: "payment_date",
+    nullable: true,
+  })
+  paymentDate: number;
+
+  @Column({
+    type: "date",
+    name: "last_update_payment_date",
+    nullable: true,
+  })
+  lastUpdatePaymentDate: Date;
+
   @OneToOne(() => Account, (account) => account.wallet)
   @JoinColumn({ name: "account_id" })
   account: Account;
